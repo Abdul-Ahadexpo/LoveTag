@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Heart, Home, PenLine, Search, Menu, X } from 'lucide-react';
 
 interface LayoutProps {
@@ -13,10 +14,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <header className="bg-white bg-opacity-90 backdrop-blur-sm shadow-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <a href="/" className="flex items-center gap-2 z-20">
+            <Link to="/" className="flex items-center gap-2 z-20">
               <Heart className="h-6 w-6 text-primary-500 heart-beat" />
               <span className="text-2xl font-script font-bold text-primary-600">LoveTag</span>
-            </a>
+            </Link>
 
             {/* Mobile menu button */}
             <button
@@ -32,51 +33,52 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
             {/* Desktop navigation */}
             <nav className="hidden md:flex gap-6 items-center">
-              <a href="/" className="flex items-center gap-2 text-gray-700 hover:text-primary-600 transition-colors">
+              <Link to="/" className="flex items-center gap-2 text-gray-700 hover:text-primary-600 transition-colors">
                 <Home className="h-5 w-5" />
                 <span>Home</span>
-              </a>
-              <a href="/post" className="flex items-center gap-2 text-gray-700 hover:text-primary-600 transition-colors">
+              </Link>
+              <Link to="/post" className="flex items-center gap-2 text-gray-700 hover:text-primary-600 transition-colors">
                 <PenLine className="h-5 w-5" />
                 <span>Post a Note</span>
-              </a>
-              <a href="/search" className="flex items-center gap-2 text-gray-700 hover:text-primary-600 transition-colors">
+              </Link>
+              <Link to="/search" className="flex items-center gap-2 text-gray-700 hover:text-primary-600 transition-colors">
                 <Search className="h-5 w-5" />
                 <span>Search</span>
-              </a>
+              </Link>
             </nav>
 
             {/* Mobile navigation */}
-            {isMenuOpen && (
-              <div className="fixed inset-0 bg-white md:hidden z-10">
-                <nav className="flex flex-col items-center justify-center h-full gap-8 text-xl">
-                  <a 
-                    href="/" 
-                    className="flex items-center gap-3 text-gray-700 hover:text-primary-600 transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <Home className="h-6 w-6" />
-                    <span>Home</span>
-                  </a>
-                  <a 
-                    href="/post" 
-                    className="flex items-center gap-3 text-gray-700 hover:text-primary-600 transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <PenLine className="h-6 w-6" />
-                    <span>Post a Note</span>
-                  </a>
-                  <a 
-                    href="/search" 
-                    className="flex items-center gap-3 text-gray-700 hover:text-primary-600 transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    <Search className="h-6 w-6" />
-                    <span>Search</span>
-                  </a>
-                </nav>
-              </div>
-            )}
+            <div className={`
+              fixed inset-0 bg-white bg-opacity-95 backdrop-blur-sm md:hidden transition-transform duration-300 ease-in-out
+              ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+            `}>
+              <nav className="flex flex-col items-center justify-center h-full gap-8 text-xl">
+                <Link 
+                  to="/" 
+                  className="flex items-center gap-3 text-gray-700 hover:text-primary-600 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Home className="h-6 w-6" />
+                  <span>Home</span>
+                </Link>
+                <Link 
+                  to="/post" 
+                  className="flex items-center gap-3 text-gray-700 hover:text-primary-600 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <PenLine className="h-6 w-6" />
+                  <span>Post a Note</span>
+                </Link>
+                <Link 
+                  to="/search" 
+                  className="flex items-center gap-3 text-gray-700 hover:text-primary-600 transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Search className="h-6 w-6" />
+                  <span>Search</span>
+                </Link>
+              </nav>
+            </div>
           </div>
         </div>
       </header>

@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Heart, PenLine, Search } from 'lucide-react';
 import Layout from '../components/Layout';
 import SearchForm from '../components/SearchForm';
 import { useNotes } from '../hooks/useNotes';
 
 const HomePage: React.FC = () => {
+  const navigate = useNavigate();
   const { searchNotes } = useNotes();
   const [showSearch, setShowSearch] = useState(false);
 
   const handleSearch = (name?: string, email?: string) => {
     if (name) {
-      window.location.href = `/search?name=${encodeURIComponent(name)}`;
+      navigate(`/search?name=${encodeURIComponent(name)}`);
     } else if (email) {
-      window.location.href = `/search?email=${encodeURIComponent(email)}`;
+      navigate(`/search?email=${encodeURIComponent(email)}`);
     }
   };
 
@@ -61,12 +63,12 @@ const HomePage: React.FC = () => {
               <p className="text-gray-600 mb-6">
                 Send an anonymous love note to someone special. Let them know they're on your mind, without revealing who you are.
               </p>
-              <a 
-                href="/post" 
+              <Link 
+                to="/post" 
                 className="inline-block bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-6 rounded-md transition-colors"
               >
                 Post a Note
-              </a>
+              </Link>
             </div>
             
             <div className="bg-white rounded-lg shadow-md p-8 border border-primary-100 hover:shadow-lg transition-all">
@@ -77,12 +79,12 @@ const HomePage: React.FC = () => {
               <p className="text-gray-600 mb-6">
                 Wonder if someone has sent you a secret message? Search by your name or email to find notes meant for you.
               </p>
-              <a 
-                href="/search" 
+              <Link 
+                to="/search" 
                 className="inline-block bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-6 rounded-md transition-colors"
               >
                 Search Notes
-              </a>
+              </Link>
             </div>
           </div>
           
