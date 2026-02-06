@@ -48,11 +48,11 @@ const SearchPage: React.FC = () => {
             {loading ? (
               <div className="text-center py-10">
                 <SearchIcon className="w-8 h-8 text-primary-400 animate-pulse mx-auto mb-4" />
-                <p className="text-gray-600">Searching for love notes...</p>
+                <p className="text-gray-600 font-comic">Searching for love notes...</p>
               </div>
             ) : notes.length > 0 ? (
               <>
-                <h2 className="text-2xl font-serif text-center mb-8">
+                <h2 className="text-2xl font-comic text-center mb-8">
                   {notes.length} {notes.length === 1 ? 'note' : 'notes'} found
                 </h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -66,10 +66,10 @@ const SearchPage: React.FC = () => {
                 <div className="h-20 w-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-4">
                   <Heart className="h-10 w-10 text-gray-300" />
                 </div>
-                <h2 className="text-2xl font-serif font-bold text-gray-800 mb-3">
+                <h2 className="text-2xl font-comic font-bold text-gray-800 mb-3">
                   No notes found
                 </h2>
-                <p className="text-gray-600">
+                <p className="text-gray-600 font-comic">
                   We couldn't find any love notes addressed to this name or email. Maybe your secret admirer
                   hasn't written yet?
                 </p>

@@ -61,17 +61,17 @@ const PostPage: React.FC = () => {
                 <Heart className="h-8 w-8 text-primary-600" fill="#f9a8d4" />
               </div>
             </div>
-            <h2 className="text-2xl font-serif font-bold text-gray-800 mb-3">
+            <h2 className="text-2xl font-comic font-bold text-gray-800 mb-3">
               Your note has been shared!
             </h2>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 mb-6 font-comic">
               Your anonymous message is now out in the world. We'll redirect you to the home page in a moment.
             </p>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6">
             <div className="mb-6">
-              <label htmlFor="recipientName" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="recipientName" className="block text-sm font-medium text-gray-700 mb-1 font-comic">
                 Recipient's Name <span className="text-secondary-600">*</span>
               </label>
               <input
@@ -79,14 +79,14 @@ const PostPage: React.FC = () => {
                 id="recipientName"
                 value={recipientName}
                 onChange={(e) => setRecipientName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent font-comic"
                 required
                 placeholder="Who is this note for?"
               />
             </div>
             
             <div className="mb-6">
-              <label htmlFor="recipientEmail" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="recipientEmail" className="block text-sm font-medium text-gray-700 mb-1 font-comic">
                 Recipient's Email <span className="text-gray-500 text-xs">(optional)</span>
               </label>
               <input
@@ -94,36 +94,36 @@ const PostPage: React.FC = () => {
                 id="recipientEmail"
                 value={recipientEmail}
                 onChange={(e) => setRecipientEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent font-comic"
                 placeholder="For more accurate searching (never publicly displayed)"
               />
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-gray-500 font-comic">
                 This makes it easier for them to find your note, but won't be shown publicly.
               </p>
             </div>
             
             <div className="mb-6">
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1 font-comic">
                 Your Message <span className="text-secondary-600">*</span>
               </label>
               <textarea
                 id="message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent font-comic"
                 rows={5}
                 required
                 placeholder="Write your anonymous love note here..."
                 maxLength={500}
               ></textarea>
               <div className="flex justify-between mt-1">
-                <p className="text-xs text-gray-500">Your identity will remain anonymous</p>
-                <p className="text-xs text-gray-500">{message.length}/500</p>
+                <p className="text-xs text-gray-500 font-comic">Your identity will remain anonymous</p>
+                <p className="text-xs text-gray-500 font-comic">{message.length}/500</p>
               </div>
             </div>
             
             {error && (
-              <div className="mb-4 p-3 bg-secondary-50 border border-secondary-200 text-secondary-700 rounded-md">
+              <div className="mb-4 p-3 bg-secondary-50 border border-secondary-200 text-secondary-700 rounded-md font-comic">
                 {error}
               </div>
             )}
@@ -131,7 +131,7 @@ const PostPage: React.FC = () => {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full flex items-center justify-center text-white font-medium py-3 px-4 rounded-md transition-colors ${
+              className={`w-full flex items-center justify-center text-white font-comic font-medium py-3 px-4 rounded-md transition-colors ${
                 loading
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-primary-600 hover:bg-primary-700'
@@ -148,7 +148,7 @@ const PostPage: React.FC = () => {
             </button>
             
             <div className="mt-6 pt-4 border-t border-gray-200">
-              <p className="text-sm text-center text-gray-500">
+              <p className="text-sm text-center text-gray-500 font-comic">
                 You can submit one anonymous note per day. Your IP address is stored only to enforce this limit.
               </p>
             </div>
