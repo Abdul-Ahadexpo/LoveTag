@@ -42,9 +42,10 @@ export default {
         },
       },
       fontFamily: {
-        'sans': ['Inter', 'ui-sans-serif', 'system-ui'],
-        'serif': ['Playfair Display', 'ui-serif', 'Georgia'],
+        'sans': ['Nunito', 'ui-sans-serif', 'system-ui'],
+        'serif': ['Comic Neue', 'ui-serif', 'Georgia'],
         'script': ['Dancing Script', 'cursive'],
+        'comic': ['Comic Neue', 'cursive'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
