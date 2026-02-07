@@ -188,11 +188,22 @@ const AboutPage: React.FC = () => {
           <div className="bg-white rounded-lg shadow-md p-6 border border-primary-100">
             <div className="flex items-center mb-4">
               <Database className="h-6 w-6 text-primary-600 mr-2" />
-              <h2 className="text-2xl font-comic font-bold text-gray-800">Database Schema</h2>
+              <h2 className="text-2xl font-comic font-bold text-gray-800">Firebase Database Structure</h2>
             </div>
+            
+            <div className="mb-6">
+              <h3 className="font-comic font-semibold text-gray-800 mb-3">Firebase Realtime Database Overview</h3>
+              <p className="text-gray-700 font-comic mb-4">
+                LoveTag uses Firebase Realtime Database, a NoSQL cloud database that stores data as JSON and 
+                synchronizes it in real-time across all connected clients. The database is structured with 
+                two main collections for optimal performance and security.
+              </p>
+            </div>
+
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-blue-50 rounded-lg p-4">
                 <h3 className="font-comic font-semibold text-gray-800 mb-2">Notes Collection</h3>
+                <p className="text-xs text-gray-600 font-comic mb-2">Path: <code>/notes</code></p>
                 <div className="text-sm font-comic space-y-1">
                   <div><strong>id:</strong> string (auto-generated)</div>
                   <div><strong>recipientName:</strong> string (required)</div>
@@ -203,6 +214,7 @@ const AboutPage: React.FC = () => {
               </div>
               <div className="bg-green-50 rounded-lg p-4">
                 <h3 className="font-comic font-semibold text-gray-800 mb-2">Submissions Collection</h3>
+                <p className="text-xs text-gray-600 font-comic mb-2">Path: <code>/submissions</code></p>
                 <div className="text-sm font-comic space-y-1">
                   <div><strong>id:</strong> string (auto-generated)</div>
                   <div><strong>ip:</strong> string (hashed IP address)</div>
@@ -211,6 +223,134 @@ const AboutPage: React.FC = () => {
                 <p className="text-xs text-gray-500 font-comic mt-2">
                   Used only for daily limit enforcement
                 </p>
+              </div>
+            </div>
+            
+            <div className="mt-6 bg-gray-50 rounded-lg p-4">
+              <h3 className="font-comic font-semibold text-gray-800 mb-3">Database Rules & Security</h3>
+              <div className="bg-gray-800 rounded p-3 overflow-x-auto">
+                <pre className="text-green-400 text-sm font-mono">
+{`{
+  "rules": {
+    ".read": true,
+    ".write": true,
+    "submissions": {
+      ".indexOn": ["ip"]
+    },
+    "notes": {
+      ".indexOn": ["recipientName", "recipientEmail"]
+    }
+  }
+}`}
+                </pre>
+              </div>
+              <p className="text-xs text-gray-600 font-comic mt-2">
+                Database indexes are created on frequently queried fields for optimal performance
+              </p>
+            </div>
+          </div>
+
+          {/* Data Operations */}
+          <div className="bg-white rounded-lg shadow-md p-6 border border-primary-100">
+            <div className="flex items-center mb-4">
+              <Code className="h-6 w-6 text-primary-600 mr-2" />
+              <h2 className="text-2xl font-comic font-bold text-gray-800">Data Operations & Flow</h2>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="border-l-4 border-blue-400 pl-4">
+                <h3 className="font-comic font-semibold text-blue-800 mb-2">1. Saving Data (POST Operation)</h3>
+                <div className="text-sm font-comic text-gray-700 space-y-2">
+                  <p><strong>Step 1:</strong> Get user's IP address using IPify API for spam prevention</p>
+                  <p><strong>Step 2:</strong> Check if IP has already submitted today by querying submissions collection</p>
+                  <p><strong>Step 3:</strong> If allowed, create new note using Firebase's <code>push()</code> method</p>
+                  <p><strong>Step 4:</strong> Save note data to <code>/notes</code> path with auto-generated ID</p>
+                  <p><strong>Step 5:</strong> Record submission in <code>/submissions</code> with IP and timestamp</p>
+                </div>
+                <div className="bg-blue-50 rounded p-3 mt-3">
+                  <p className="text-xs font-mono text-blue-800">
+                    Firebase Methods: <code>ref(), push(), set(), query(), orderByChild(), equalTo()</code>
+                  </p>
+                </div>
+              </div>
+              
+              <div className="border-l-4 border-green-400 pl-4">
+                <h3 className="font-comic font-semibold text-green-800 mb-2">2. Fetching Data (GET Operation)</h3>
+                <div className="text-sm font-comic text-gray-700 space-y-2">
+                  <p><strong>Name Search:</strong> Query <code>/notes</code> ordered by <code>recipientName</code></p>
+                  <p><strong>Email Search:</strong> Query <code>/notes</code> where <code>recipientEmail</code> equals input</p>
+                  <p><strong>Filtering:</strong> Client-side filtering for partial name matches</p>
+                  <p><strong>Sorting:</strong> Results sorted by <code>createdAt</code> timestamp (newest first)</p>
+                </div>
+                <div className="bg-green-50 rounded p-3 mt-3">
+                  <p className="text-xs font-mono text-green-800">
+                    Firebase Methods: <code>get(), query(), orderByChild(), equalTo(), forEach()</code>
+                  </p>
+                </div>
+              </div>
+              
+              <div className="border-l-4 border-purple-400 pl-4">
+                <h3 className="font-comic font-semibold text-purple-800 mb-2">3. Real-time Synchronization</h3>
+                <div className="text-sm font-comic text-gray-700 space-y-2">
+                  <p><strong>Connection:</strong> Firebase maintains persistent WebSocket connection</p>
+                  <p><strong>Offline Support:</strong> Data cached locally and synced when connection restored</p>
+                  <p><strong>Performance:</strong> Indexed queries ensure fast retrieval even with large datasets</p>
+                  <p><strong>Scalability:</strong> Firebase automatically scales based on usage</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Firebase Configuration */}
+          <div className="bg-white rounded-lg shadow-md p-6 border border-primary-100">
+            <div className="flex items-center mb-4">
+              <Database className="h-6 w-6 text-primary-600 mr-2" />
+              <h2 className="text-2xl font-comic font-bold text-gray-800">Firebase Configuration</h2>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-orange-50 rounded-lg p-4">
+                <h3 className="font-comic font-semibold text-orange-800 mb-2">Project Setup</h3>
+                <div className="text-sm font-comic text-orange-700 space-y-1">
+                  <div><strong>Project ID:</strong> lovetag-bb091</div>
+                  <div><strong>Database URL:</strong> lovetag-bb091-default-rtdb.firebaseio.com</div>
+                  <div><strong>Region:</strong> us-central1 (default)</div>
+                  <div><strong>Authentication:</strong> Disabled (anonymous access)</div>
+                </div>
+              </div>
+              
+              <div className="bg-red-50 rounded-lg p-4">
+                <h3 className="font-comic font-semibold text-red-800 mb-2">Connection Details</h3>
+                <div className="text-sm font-comic text-red-700 space-y-1">
+                  <div><strong>SDK:</strong> Firebase JavaScript SDK v10.8.0</div>
+                  <div><strong>Database Type:</strong> Realtime Database (not Firestore)</div>
+                  <div><strong>Connection:</strong> WebSocket with fallback to long polling</div>
+                  <div><strong>Data Format:</strong> JSON with automatic type conversion</div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="mt-4 bg-gray-50 rounded-lg p-4">
+              <h3 className="font-comic font-semibold text-gray-800 mb-2">Configuration Code</h3>
+              <div className="bg-gray-800 rounded p-3 overflow-x-auto">
+                <pre className="text-green-400 text-sm font-mono">
+{`// Firebase Configuration (src/firebase/config.ts)
+import { initializeApp } from 'firebase/app';
+import { getDatabase } from 'firebase/database';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBIVDqwlnbnJjm0b1CflG9wLA1vJhDK-OQ",
+  authDomain: "lovetag-bb091.firebaseapp.com",
+  databaseURL: "https://lovetag-bb091-default-rtdb.firebaseio.com",
+  projectId: "lovetag-bb091",
+  storageBucket: "lovetag-bb091.firebasestorage.app",
+  messagingSenderId: "847687576677",
+  appId: "1:847687576677:web:57d08661c33f1d5c4d2a8c"
+};
+
+const app = initializeApp(firebaseConfig);
+export const database = getDatabase(app);`}
+                </pre>
               </div>
             </div>
           </div>
